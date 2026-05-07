@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HealMind — AwareMind Indonesia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Tema Baru: AwareMind Gradient (Biru ke Ungu) */
+    --teal-deep: #7b40df;   /* Ungu AwareMind */
+    --teal-mid: #5e61e6;    /* Ungu-Biru (Indigo) */
+    --teal-light: #4884ee;  /* Biru AwareMind */
+    
+    --sage: #a78bfa;        /* Ungu Muda */
+    --sage-light: #ddd6fe;  /* Ungu Sangat Muda */
+    
+    --cream: #f4f6fb;       /* Background Utama (Biru sangat pudar) */
+    --cream-dark: #e2e6f0;  /* Background Aksen/Garis */
+    
+    --text-dark: #161825;   /* Teks Hitam-Biru Gelap */
+    --text-mid: #3a3f58;    /* Teks Abu-Biru */
+    --text-light: #64708d;  /* Teks Pudar */
+    
+    --white: #ffffff;
+    --gold: #f59e0b;        /* Kuning (Tetap) */
+    --error: #ef4444;       /* Merah (Tetap) */
+    --success: #10b981;     /* Hijau (Tetap) */
+    
+    --shadow-sm: 0 2px 12px rgba(94, 97, 230, 0.08);
+    --shadow-md: 0 8px 32px rgba(94, 97, 230, 0.12);
+    --shadow-lg: 0 20px 60px rgba(94, 97, 230, 0.18);
+    
+    --radius: 16px;
+    --radius-sm: 8px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; overflow-x: hidden; }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--teal-mid); border-radius: 3px; }
+
+  /* HEADER */
+  header { background: var(--white); border-bottom: 1px solid var(--cream-dark); padding: 0 24px; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
+  .header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .logo-icon { width: 38px; height: 38px; background: linear-gradient(135deg, var(--teal-light), var(--teal-deep)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--white); }
+  .logo-text { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--teal-deep); }
+  .logo-sub { font-size: 11px; color: var(--text-light); letter-spacing: 0.05em; }
+  nav { display: flex; gap: 8px; align-items: center; }
+  .nav-btn { padding: 8px 18px; border-radius: 20px; font-size: 14px; font-weight: 500; cursor: pointer; transition: var(--transition); border: none; font-family: 'DM Sans', sans-serif; }
+  .nav-ghost { background: transparent; color: var(--text-mid); }
+  .nav-ghost:hover { background: var(--cream); color: var(--teal-deep); }
+  .nav-solid { background: var(--teal-deep); color: var(--white); }
+  .nav-solid:hover { background: var(--teal-mid); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+
+  /* VIEWS */
+  .view { display: none; animation: fadeIn 0.4s ease; }
+  .view.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--teal-light) 0%, var(--teal-mid) 50%, var(--teal-deep) 100%); color: var(--white); padding: 80px 24px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); pointer-events: none; }
+  .hero-badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.95); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 16px; border-radius: 20px; margin-bottom: 20px; position: relative; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 56px); font-weight: 700; line-height: 1.2; margin-bottom: 16px; text-shadow: 0 2px 20px rgba(0,0,0,0.15); position: relative; }
+  .hero p { font-size: 18px; opacity: 0.88; max-width: 520px; margin: 0 auto 36px; line-height: 1.6; font-weight: 300; position: relative; }
+  .hero-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--teal-deep); border: none; border-radius: 30px; padding: 14px 32px; font-size: 16px; font-weight: 600; cursor: pointer; transition: var(--transition); font-family: 'DM Sans', sans-serif; box-shadow: 0 4px 24px rgba(0,0,0,0.15); position: relative; }
+  .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+  .hero-cta.ghost { background: transparent; color: white; border: 1.5px solid rgba(255,255,255,0.5); margin-left: 8px; }
+  .hero-cta.ghost:hover { background: rgba(255,255,255,0.1); }
+  .hero-stats { display: flex; justify-content: center; gap: 40px; margin-top: 48px; flex-wrap: wrap; position: relative; }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; }
+  .stat-label { font-size: 13px; opacity: 0.75; }
+
+  /* SECTION */
+  .section { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
+  .section-head { text-align: center; margin-bottom: 32px; }
+  .section-head h2 { font-family: 'Playfair Display', serif; font-size: clamp(24px, 4vw, 36px); color: var(--teal-deep); margin-bottom: 10px; }
+  .section-head p { color: var(--text-light); font-size: 16px; max-width: 500px; margin: 0 auto; }
+
+  /* MODE TOGGLE */
+  .mode-toggle { display: inline-flex; background: var(--white); border-radius: 30px; padding: 4px; box-shadow: var(--shadow-sm); margin: 0 auto 28px; }
+  .mode-btn { padding: 8px 22px; border-radius: 22px; border: none; background: transparent; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--text-light); transition: var(--transition); font-family: 'DM Sans', sans-serif; }
+  .mode-btn.active { background: var(--teal-deep); color: var(--white); }
+  .mode-toggle-wrap { text-align: center; }
+
+  /* FILTER CHIPS */
+  .filter-bar { background: var(--white); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow-sm); margin-bottom: 28px; }
+  .filter-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+  .filter-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .filter-label { font-size: 12px; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.06em; }
+  .chip { padding: 6px 14px; border-radius: 20px; background: var(--cream); color: var(--text-mid); border: 1.5px solid transparent; cursor: pointer; font-size: 13px; font-weight: 500; transition: var(--transition); font-family: 'DM Sans', sans-serif; }
+  .chip:hover { background: var(--cream-dark); }
+  .chip.active { background: var(--teal-deep); color: var(--white); border-color: var(--teal-deep); }
+  .search-input { flex: 1; min-width: 180px; padding: 10px 16px; border: 1.5px solid var(--cream-dark); border-radius: 22px; font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none; transition: var(--transition); }
+  .search-input:focus { border-color: var(--teal-mid); }
+  .clear-filter { background: transparent; border: none; color: var(--teal-mid); font-size: 13px; cursor: pointer; font-weight: 600; padding: 4px 8px; }
+  .clear-filter:hover { text-decoration: underline; }
+
+  /* KONSELOR CARDS */
+  .konselor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+  .konselor-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition); cursor: pointer; position: relative; display: flex; flex-direction: column; }
+  .konselor-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+  .konselor-card.busy { opacity: 0.65; }
+  .card-photo { height: 180px; background: linear-gradient(135deg, var(--teal-light), var(--teal-deep)); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .card-photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+  .card-photo-initials { width: 80px; height: 80px; border-radius: 50%; background: rgba(255,255,255,0.2); border: 3px solid rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 28px; color: var(--white); font-weight: 700; }
+  .card-status { position: absolute; top: 12px; right: 12px; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .status-aktif { background: var(--success); color: var(--white); }
+  .status-sibuk { background: var(--gold); color: var(--white); }
+  .card-body { padding: 18px 20px 20px; flex: 1; display: flex; flex-direction: column; }
+  .card-name { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--text-dark); margin-bottom: 4px; }
+  .card-title { font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .tag { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; background: var(--cream); color: var(--teal-mid); border: 1px solid var(--cream-dark); }
+  .next-slot-badge { display: flex; align-items: center; gap: 6px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25); border-radius: var(--radius-sm); padding: 8px 12px; margin-bottom: 12px; font-size: 13px; color: var(--success); font-weight: 600; }
+  .next-slot-badge.empty { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.2); color: var(--error); }
+  .card-actions { display: flex; gap: 8px; margin-top: auto; }
+  .card-btn { flex: 1; padding: 11px 8px; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--teal-light), var(--teal-mid)); color: var(--white); border: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: var(--transition); font-family: 'DM Sans', sans-serif; }
+  .card-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+  .card-btn.secondary { background: var(--white); color: var(--teal-deep); border: 1.5px solid var(--teal-deep); }
+  .card-btn.secondary:hover { background: var(--cream); }
+  .card-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* JADWAL TIMELINE VIEW */
+  .timeline { display: flex; flex-direction: column; gap: 16px; }
+  .day-group { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
+  .day-header { padding: 14px 20px; background: linear-gradient(135deg, var(--teal-light), var(--teal-mid)); color: var(--white); display: flex; justify-content: space-between; align-items: baseline; }
+  .day-header h3 { font-family: 'Playfair Display', serif; font-size: 18px; }
+  .day-header span { font-size: 13px; opacity: 0.85; }
+  .day-slots { padding: 16px 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .timeline-slot { background: var(--cream); border: 1.5px solid var(--cream-dark); border-radius: var(--radius-sm); padding: 12px 14px; cursor: pointer; transition: var(--transition); display: flex; flex-direction: column; gap: 4px; }
+  .timeline-slot:hover { border-color: var(--teal-mid); background: var(--white); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+  .timeline-slot.taken { opacity: 0.45; pointer-events: none; }
+  .ts-time { font-size: 14px; font-weight: 700; color: var(--teal-deep); }
+  .ts-konselor { font-size: 13px; color: var(--text-mid); }
+  .ts-spec { font-size: 11px; color: var(--text-light); }
+
+  /* MODAL */
+  .overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(22, 24, 37, 0.65); backdrop-filter: blur(4px); align-items: flex-start; justify-content: center; overflow-y: auto; padding: 40px 20px; }
+  .overlay.open { display: flex; animation: fadeIn 0.25s ease; }
+  .modal { background: var(--white); border-radius: 20px; width: 100%; max-width: 600px; box-shadow: var(--shadow-lg); overflow: hidden; position: relative; }
+  .modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: var(--cream); border: none; cursor: pointer; font-size: 16px; color: var(--text-mid); display: flex; align-items: center; justify-content: center; transition: var(--transition); z-index: 10; }
+  .modal-close:hover { background: var(--cream-dark); }
+  .modal-header { padding: 28px 28px 20px; border-bottom: 1px solid var(--cream-dark); display: flex; gap: 16px; align-items: center; }
+  .modal-avatar { width: 72px; height: 72px; border-radius: 16px; background: linear-gradient(135deg, var(--teal-light), var(--teal-deep)); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 24px; color: var(--white); font-weight: 700; flex-shrink: 0; overflow: hidden; }
+  .modal-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .modal-info h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--text-dark); margin-bottom: 4px; }
+  .modal-info p { font-size: 14px; color: var(--text-light); margin-bottom: 8px; }
+  .modal-body { padding: 24px 28px; }
+  .modal-section { margin-bottom: 24px; }
+  .modal-section h4 { font-size: 13px; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+
+  /* WEEK SLOTS */
+  .week-tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+  .week-tab { padding: 6px 12px; border-radius: 16px; background: var(--cream); border: 1.5px solid transparent; font-size: 12px; cursor: pointer; color: var(--text-mid); font-family: 'DM Sans', sans-serif; }
+  .week-tab.active { background: var(--teal-deep); color: var(--white); border-color: var(--teal-deep); }
+
+  .slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+  .slot { padding: 10px 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--cream-dark); background: var(--cream); font-size: 13px; font-weight: 500; color: var(--text-mid); cursor: pointer; transition: var(--transition); text-align: center; }
+  .slot:hover { border-color: var(--teal-mid); background: rgba(94, 97, 230, 0.08); color: var(--teal-deep); }
+  .slot.selected { border-color: var(--teal-deep); background: var(--teal-deep); color: var(--white); }
+  .slot.taken { opacity: 0.4; pointer-events: none; text-decoration: line-through; }
+  .slot-day { font-size: 11px; opacity: 0.75; margin-bottom: 2px; }
+  .slot-time { font-size: 14px; font-weight: 600; }
+
+  /* FORM */
+  .form-section { display: none; }
+  .form-section.visible { display: block; animation: fadeIn 0.3s ease; }
+  .form-group { margin-bottom: 18px; }
+  label { display: block; font-size: 13px; font-weight: 600; color: var(--text-mid); margin-bottom: 6px; }
+  input, textarea, select { width: 100%; padding: 12px 14px; border: 1.5px solid var(--cream-dark); border-radius: var(--radius-sm); font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--text-dark); background: var(--white); transition: var(--transition); outline: none; }
+  input:focus, textarea:focus, select:focus { border-color: var(--teal-mid); box-shadow: 0 0 0 3px rgba(94, 97, 230, 0.15); }
+  input.invalid { border-color: var(--error); }
+  textarea { resize: vertical; min-height: 90px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field-error { font-size: 12px; color: var(--error); margin-top: 4px; display: none; }
+  .field-error.visible { display: block; }
+  .submit-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--teal-light), var(--teal-mid)); color: var(--white); border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; transition: var(--transition); font-family: 'DM Sans', sans-serif; margin-top: 8px; }
+  .submit-btn:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+  .submit-btn:disabled { opacity: 0.5; pointer-events: none; }
+
+  /* SUCCESS */
+  .success-screen { display: none; text-align: center; padding: 48px 32px; }
+  .success-screen.visible { display: block; animation: fadeIn 0.4s ease; }
+  .success-icon { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--success), #34d399); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 36px; color: var(--white); box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3); }
+  .success-screen h3 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--text-dark); margin-bottom: 8px; }
+  .success-screen p { color: var(--text-light); font-size: 15px; line-height: 1.6; }
+
+  /* ADMIN */
+  #view-admin { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+  .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+  .admin-header h2 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--teal-deep); }
+  .admin-tabs { display: flex; gap: 4px; margin-bottom: 16px; }
+  .admin-tab { padding: 10px 20px; border: none; background: transparent; color: var(--text-light); cursor: pointer; font-size: 14px; font-weight: 600; border-bottom: 2px solid transparent; font-family: 'DM Sans', sans-serif; }
+  .admin-tab.active { color: var(--teal-deep); border-color: var(--teal-deep); }
+  .admin-table-wrap { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 32px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; padding: 14px 18px; background: var(--cream); color: var(--text-light); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--cream-dark); white-space: nowrap; }
+  td { padding: 14px 18px; font-size: 14px; color: var(--text-mid); border-bottom: 1px solid var(--cream-dark); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--cream); }
+  
+  .admin-pill { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; font-family: 'DM Sans', sans-serif; }
+  .pill-aktif { background: rgba(16, 185, 129, 0.12); color: var(--success); }
+  .pill-sibuk { background: rgba(245, 158, 11, 0.15); color: var(--gold); }
+  .pill-status { padding: 3px 8px; border-radius: 14px; font-size: 11px; font-weight: 600; cursor: pointer; border: none; font-family: 'DM Sans', sans-serif; }
+  .pill-Menunggu { background: rgba(245, 158, 11, 0.15); color: var(--gold); }
+  .pill-Terkonfirmasi { background: rgba(94, 97, 230, 0.12); color: var(--teal-mid); }
+  .pill-Selesai { background: rgba(16, 185, 129, 0.12); color: var(--success); }
+  .pill-Batal { background: rgba(239, 68, 68, 0.1); color: var(--error); }
+  
+  /* ACTION BUTTONS (EDIT & DELETE) */
+  .btn-action { border: none; border-radius: 6px; padding: 5px 10px; cursor: pointer; font-size: 13px; transition: var(--transition); margin-right: 4px; font-family: 'DM Sans', sans-serif; }
+  .btn-edit { background: rgba(94, 97, 230, 0.1); color: var(--teal-mid); }
+  .btn-edit:hover { background: var(--teal-mid); color: var(--white); }
+  .btn-del { background: rgba(239, 68, 68, 0.1); color: var(--error); }
+  .btn-del:hover { background: var(--error); color: var(--white); }
+
+  .add-form { background: var(--white); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-sm); transition: all 0.3s ease; }
+  .add-form.editing { border: 2px solid var(--teal-light); background: #fdfdfd; }
+  .add-form h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--teal-deep); margin-bottom: 20px; }
+
+  /* LOGIN */
+  .login-wrap { min-height: calc(100vh - 68px); display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .login-box { background: var(--white); border-radius: 20px; padding: 40px; box-shadow: var(--shadow-md); width: 100%; max-width: 380px; text-align: center; }
+  .login-box h2 { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--teal-deep); margin-bottom: 6px; }
+  .login-box p { color: var(--text-light); font-size: 14px; margin-bottom: 28px; }
+  .login-err { color: var(--error); font-size: 13px; margin-top: -8px; margin-bottom: 12px; display: none; }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--text-dark); color: var(--white); padding: 12px 24px; border-radius: 30px; font-size: 14px; font-weight: 500; box-shadow: var(--shadow-md); z-index: 999; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 90vw; text-align: center; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.error { background: var(--error); }
+  .toast.success { background: var(--success); }
+
+  /* LOADING */
+  .spinner { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-top-color: var(--white); border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .skeleton-card { background: var(--white); border-radius: var(--radius); height: 360px; box-shadow: var(--shadow-sm); position: relative; overflow: hidden; }
+  .skeleton-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); animation: shimmer 1.4s infinite; }
+  @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--cream-dark); margin: 8px 0 20px; }
+
+  /* FEATURES */
+  .features { background: var(--white); }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .feat-card { text-align: center; padding: 32px 20px; border-radius: var(--radius); background: var(--cream); transition: var(--transition); }
+  .feat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-sm); }
+  .feat-icon { font-size: 36px; margin-bottom: 14px; }
+  .feat-card h3 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--teal-deep); margin-bottom: 8px; }
+  .feat-card p { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+
+  /* SLOT SUMMARY */
+  .slot-summary { background: rgba(72,132,238,0.08); border: 1.5px solid var(--teal-light); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 14px; color: var(--teal-deep); margin-bottom: 20px; display: none; }
+  .slot-summary.visible { display: block; }
+
+  /* EMPTY STATE */
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-light); grid-column: 1 / -1; }
+  .empty-state div { font-size: 48px; margin-bottom: 12px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+    nav .nav-ghost { display: none; }
+    .modal-body { padding: 20px; }
+    .modal-header { padding: 20px 20px 16px; }
+    td:nth-child(3), th:nth-child(3) { display: none; }
+    .filter-row { flex-direction: column; align-items: stretch; }
+    .day-slots { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo" onclick="showView('landing')">
+      <div class="logo-icon" style="background:transparent;padding:0;overflow:hidden;"><img src="data:image/png;base64,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" style="width:38px;height:38px;object-fit:contain;" alt="AwareMind"></div>
+      <div>
+        <div class="logo-text">HealMind</div>
+        <div class="logo-sub">AwareMind Indonesia</div>
+      </div>
+    </div>
+    <nav>
+      <button class="nav-btn nav-ghost" onclick="showView('landing')">Beranda</button>
+      <button class="nav-btn nav-ghost" onclick="showView('konselor')">Konselor</button>
+      <button class="nav-btn nav-solid" onclick="showView('admin-login')">Admin</button>
+    </nav>
+  </div>
+</header>
+
+<div class="toast" id="toast"></div>
+
+<!-- LANDING -->
+<div class="view active" id="view-landing">
+  <div class="hero">
+    <div class="hero-badge">✦ Kesehatan Mental Mulai dari Sini</div>
+    <h1>Temukan Konselor<br>yang Tepat Untukmu</h1>
+    <p>Ruang aman, tanpa penilaian. Mulai perjalanan pulih bersama konselor profesional kami.</p>
+    <button class="hero-cta" onclick="showView('konselor')">Lihat Konselor ✦</button>
+    <button class="hero-cta ghost" onclick="quickBook()">⚡ Booking Slot Tercepat</button>
+    
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num" id="stat-konselor">—</div><div class="stat-label">Konselor Aktif</div></div>
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Klien Terbantu</div></div>
+      <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Kepuasan Klien</div></div>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="section">
+      <div class="section-head">
+        <h2>Kenapa HealMind?</h2>
+        <p>Kami hadir untuk memastikan perjalanan kesehatan mentalmu berjalan dengan aman dan nyaman.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feat-card"><div class="feat-icon">🛡️</div><h3>Aman & Rahasia</h3><p>Semua sesi dijaga kerahasiaannya. Data pribadimu tidak pernah kami bagikan.</p></div>
+        <div class="feat-card"><div class="feat-icon">📅</div><h3>Jadwal Fleksibel</h3><p>Tersedia slot sore dan malam hari, mudah disesuaikan dengan jadwalmu.</p></div>
+        <div class="feat-card"><div class="feat-icon">🎓</div><h3>Konselor Berpengalaman</h3><p>Semua konselor telah melalui pelatihan dan seleksi ketat oleh AwareMind.</p></div>
+        <div class="feat-card"><div class="feat-icon">💚</div><h3>Pendekatan Empatik</h3><p>Tidak ada penilaian. Hanya pendampingan yang hangat dan penuh pengertian.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KONSELOR -->
+<div class="view" id="view-konselor">
+  <div class="section">
+    <div class="section-head">
+      <h2>Pilih Konselor & Jadwal</h2>
+      <p>Telusuri konselor berdasarkan kebutuhanmu, atau langsung pilih jadwal yang sesuai.</p>
+    </div>
+
+    <div class="mode-toggle-wrap">
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="mode-konselor-btn" onclick="setMode('konselor')">👤 Per Konselor</button>
+        <button class="mode-btn" id="mode-jadwal-btn" onclick="setMode('jadwal')">📅 Per Jadwal</button>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-row">
+        <input class="search-input" id="search-input" type="text" placeholder="🔍  Cari nama atau topik..." oninput="applyFilters()">
+        <button class="clear-filter" onclick="resetFilters()">Reset Filter</button>
+      </div>
+      <div class="filter-row" style="margin-top:14px;">
+        <div class="filter-group">
+          <span class="filter-label">Topik</span>
+          <div id="chip-topik"></div>
+        </div>
+      </div>
+      <div class="filter-row" style="margin-top:10px;">
+        <div class="filter-group">
+          <span class="filter-label">Waktu</span>
+          <button class="chip" data-time="" onclick="toggleChip(this,'time')">Semua</button>
+          <button class="chip" data-time="pagi" onclick="toggleChip(this,'time')">🌅 Pagi (06–11)</button>
+          <button class="chip" data-time="siang" onclick="toggleChip(this,'time')">☀️ Siang (11–15)</button>
+          <button class="chip" data-time="sore" onclick="toggleChip(this,'time')">🌇 Sore (15–18)</button>
+          <button class="chip" data-time="malam" onclick="toggleChip(this,'time')">🌙 Malam (18–22)</button>
+        </div>
+      </div>
+      <div class="filter-row" style="margin-top:10px;">
+        <div class="filter-group">
+          <span class="filter-label">Hari</span>
+          <button class="chip" data-day="" onclick="toggleChip(this,'day')">Semua</button>
+          <button class="chip" data-day="weekday" onclick="toggleChip(this,'day')">Hari kerja</button>
+          <button class="chip" data-day="weekend" onclick="toggleChip(this,'day')">Akhir pekan</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="konselor-grid" class="konselor-grid"></div>
+    <div id="jadwal-timeline" class="timeline" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="view" id="view-admin-login">
+  <div class="login-wrap">
+    <div class="login-box">
+      <div style="font-size:48px;margin-bottom:16px;">🔐</div>
+      <h2>Admin Panel</h2>
+      <p>Masuk sebagai administrator HealMind</p>
+      <div class="form-group" style="text-align:left;">
+        <label>Password Admin</label>
+        <input type="password" id="admin-pw" placeholder="Masukkan password..." onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="login-err" id="login-err">❌ Password salah. Coba lagi.</div>
+      <button class="submit-btn" id="login-btn" onclick="doLogin()">Masuk ke Admin Panel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="view" id="view-admin">
+  <div class="admin-header">
+    <h2>⚙️ Admin Panel</h2>
+    <button class="nav-btn nav-ghost" onclick="doLogout()">Keluar</button>
+  </div>
+
+  <div class="admin-tabs">
+    <button class="admin-tab active" id="tab-konselor-btn" onclick="setAdminTab('konselor')">Konselor</button>
+    <button class="admin-tab" id="tab-bookings-btn" onclick="setAdminTab('bookings')">Booking</button>
+  </div>
+
+  <div id="admin-tab-konselor">
+    <div class="admin-table-wrap">
+      <table>
+        <thead>
+          <tr><th>Nama</th><th>Spesialisasi</th><th>Email</th><th>Status</th><th>Aksi</th></tr>
+        </thead>
+        <tbody id="admin-konselor-tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="add-form" id="admin-konselor-form">
+      <h3 id="form-title">➕ Tambah Konselor Baru</h3>
+      <div class="form-row">
+        <div class="form-group"><label>Nama Lengkap</label><input type="text" id="new-nama" placeholder="Kak Ayu Andini"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="new-email" placeholder="konselor@email.com"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Gelar / Posisi</label><input type="text" id="new-title" placeholder="S.Psi., M.Psi."></div>
+        <div class="form-group"><label>URL Foto (opsional)</label><input type="text" id="new-foto" placeholder="https://..."></div>
+      </div>
+      <div class="form-group"><label>Spesialisasi (pisah dengan koma)</label><input type="text" id="new-spesialis" placeholder="Kecemasan, Depresi, Karir"></div>
+      <div class="form-group"><label>Bio Singkat</label><textarea id="new-bio" rows="3" placeholder="Deskripsi singkat..."></textarea></div>
+      <div class="form-group">
+        <label>Slot Jadwal Mingguan</label>
+        <input type="text" id="new-slots" placeholder="Senin 19:00;Rabu 20:00;Jumat 18:00">
+        <p style="font-size:12px;color:var(--text-light);margin-top:6px;">Format: <code>Hari HH:MM</code> dipisah titik koma.</p>
+      </div>
+      <div style="display:flex; gap:12px; align-items:center;">
+        <button class="submit-btn" id="save-konselor-btn" style="max-width:220px;" onclick="saveKonselor()">Tambah Konselor</button>
+        <button class="submit-btn" id="cancel-edit-btn" style="max-width:140px; background:var(--error); display:none;" onclick="cancelEdit()">Batal Edit</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-tab-bookings" style="display:none;">
+    <div class="admin-table-wrap">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Klien</th><th>Konselor</th><th>Jadwal</th><th>Status</th></tr>
+        </thead>
+        <tbody id="admin-bookings-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="overlay" id="booking-overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-header">
+      <div class="modal-avatar" id="modal-avatar"></div>
+      <div class="modal-info">
+        <h3 id="modal-name">—</h3>
+        <p id="modal-title">—</p>
+        <div class="card-tags" id="modal-tags"></div>
+      </div>
+    </div>
+
+    <div class="success-screen" id="success-screen">
+      <div class="success-icon">✓</div>
+      <h3>Pendaftaran Berhasil!</h3>
+      <p id="success-msg">Notifikasi telah dikirim ke emailmu dan konselor.</p>
+      <button class="submit-btn" style="max-width:200px;margin-top:24px;" onclick="closeModal()">Tutup</button>
+    </div>
+
+    <div class="modal-body" id="modal-body">
+      <div class="modal-section" id="modal-bio-section">
+        <h4>Tentang Konselor</h4>
+        <p id="modal-bio" style="font-size:14px;color:var(--text-mid);line-height:1.7;"></p>
+      </div>
+
+      <div class="modal-section">
+        <h4>Pilih Jadwal Konseling</h4>
+        <div class="week-tabs" id="week-tabs"></div>
+        <div class="slots-grid" id="slots-grid"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="form-section" id="booking-form-section">
+        <div class="slot-summary" id="slot-summary"></div>
+        <div class="form-row">
+          <div class="form-group"><label>Nama Lengkap *</label><input type="text" id="f-nama" placeholder="Nama kamu"><div class="field-error" id="err-nama">Wajib diisi.</div></div>
+          <div class="form-group"><label>Usia *</label><input type="number" id="f-usia" min="10" max="80" placeholder="Usia"><div class="field-error" id="err-usia">Usia harus 10–80.</div></div>
+        </div>
+        <div class="form-group"><label>Nomor WhatsApp *</label><input type="tel" id="f-wa" placeholder="08xxxxxxxxxx"><div class="field-error" id="err-wa">Format WA tidak valid (9–14 digit).</div></div>
+        <div class="form-group"><label>Email (untuk notifikasi) *</label><input type="email" id="f-email" placeholder="emailkamu@gmail.com"><div class="field-error" id="err-email">Format email tidak valid.</div></div>
+        <div class="form-group"><label>Keluhan Singkat *</label><textarea id="f-keluhan" placeholder="Ceritakan sedikit tentang yang ingin kamu diskusikan..."></textarea><div class="field-error" id="err-keluhan">Wajib diisi.</div></div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Jenis Kelamin *</label>
+            <select id="f-gender"><option value="">-- Pilih --</option><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option><option value="Lainnya">Lainnya</option></select>
+            <div class="field-error" id="err-gender">Wajib dipilih.</div>
+          </div>
+          <div class="form-group">
+            <label>Sudah berapa lama masalah ini? *</label>
+            <select id="f-durasi"><option value="">-- Pilih --</option><option value="Kurang dari 1 bulan">Kurang dari 1 bulan</option><option value="1–3 bulan">1–3 bulan</option><option value="3–6 bulan">3–6 bulan</option><option value="6 bulan – 1 tahun">6 bulan – 1 tahun</option><option value="Lebih dari 1 tahun">Lebih dari 1 tahun</option></select>
+            <div class="field-error" id="err-durasi">Wajib dipilih.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Topik spesifik yang ingin dibahas *</label>
+          <input type="text" id="f-topik" placeholder="Contoh: susah tidur karena pikiran berlebihan...">
+          <div class="field-error" id="err-topik">Wajib diisi (min. 5 karakter).</div>
+        </div>
+        <div class="form-group">
+          <label>Ceritakan masalah yang Anda hadapi * <span style="font-size:11px;color:var(--text-light);font-weight:400;">(maks. 2 paragraf)</span></label>
+          <textarea id="f-cerita" rows="5" placeholder="Tuliskan dengan jujur, tidak ada yang akan menghakimi. Ceritamu aman di sini..."></textarea>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+            <div class="field-error" id="err-cerita" style="margin:0;">Wajib diisi (min. 20 karakter).</div>
+            <span id="cerita-count" style="font-size:11px;color:var(--text-light);">0 karakter</span>
+          </div>
+        </div>
+
+        <button class="submit-btn" id="submit-btn" onclick="submitBooking()">Konfirmasi Pendaftaran</button>
+        <p style="font-size:12px;color:var(--text-light);text-align:center;margin-top:10px;">Data kamu aman & terjaga kerahasiaannya 🛡️</p>
+      </div>
+
+      <p id="slot-hint" style="font-size:13px;color:var(--text-light);text-align:center;padding:8px 0;">☝️ Pilih jadwal di atas untuk melanjutkan pendaftaran</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════════════
+let konselorData = [];
+let selectedKonselor = null;
+let selectedSlot = null;             
+let adminToken = null;
+let viewMode = 'konselor';           
+let modalWeekFilter = 0;             
+let editingKonselorId = null;
+
+const filters = { search: '', topik: '', time: '', day: '' };
+
+const DAYS_SHORT = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+const MONTHS_ID = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+
+// ═══════════════════════════════════════════════════════════════
+// CONFIG — Ganti dengan URL Google Apps Script kamu setelah deploy
+// ═══════════════════════════════════════════════════════════════
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbygao8NIG0fBhWaEEO6poM-Ry2lBQTQ634mWeY-DjyzbT9GBBoAJReoxia7rMfv4v4y/exec';
+// Contoh: 'https://script.google.com/macros/s/AKfycby.../exec'
+
+// Fetch-based API caller (works from GitHub Pages)
+async function gasCall(fn, ...args) {
+  if (!SCRIPT_URL || SCRIPT_URL.includes('PASTE_URL')) {
+    throw new Error('SCRIPT_URL belum diisi! Buka index.html dan isi SCRIPT_URL dengan URL Apps Script kamu.');
+  }
+  try {
+    let res;
+    if (fn === 'getAllKonselorPublic') {
+      // GET request — tidak butuh preflight
+      res = await fetch(SCRIPT_URL + '?action=getAllKonselorPublic', { redirect: 'follow' });
+    } else {
+      // POST request dengan body text/plain — tidak butuh preflight CORS
+      res = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        redirect: 'follow',
+        body: JSON.stringify({ action: fn, args: args })
+        // PENTING: Jangan set Content-Type agar tidak trigger CORS preflight
+      });
+    }
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.json();
+  } catch(err) {
+    throw new Error('Gagal koneksi ke server: ' + String(err));
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ROUTING
+// ═══════════════════════════════════════════════════════════════════════════
+function showView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const el = document.getElementById('view-' + view);
+  if (el) { el.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  if (view === 'konselor') renderCurrentMode();
+  if (view === 'admin') {
+    if (!adminToken) { showView('admin-login'); return; }
+    setAdminTab('konselor');
+  }
+  if (view === 'admin-login') document.getElementById('admin-pw').value = '';
+}
+
+function getInitials(name) {
+  if (!name) return '?';
+  const parts = name.trim().split(/\s+/);
+  const prefixes = ['kak','bu','pak','mr','mrs','ms','dr'];
+  const filtered = parts.filter(p => !prefixes.includes(p.toLowerCase().replace('.','')));
+  const useArr = filtered.length ? filtered : parts;
+  return useArr.slice(0, 2).map(w => w[0]).join('').toUpperCase();
+}
+
+function timeBucket(hour) {
+  if (hour >= 6 && hour < 11) return 'pagi';
+  if (hour >= 11 && hour < 15) return 'siang';
+  if (hour >= 15 && hour < 18) return 'sore';
+  if (hour >= 18 && hour < 22) return 'malam';
+  return 'lain';
+}
+function isWeekend(weekday) { return weekday === 0 || weekday === 6; }
+
+function passesFilters(k, slot) {
+  if (filters.topik && !k.spesialis.some(s => s.toLowerCase().includes(filters.topik.toLowerCase()))) return false;
+  if (slot) {
+    if (filters.time && timeBucket(slot.hour) !== filters.time) return false;
+    if (filters.day === 'weekday' && isWeekend(slot.weekday)) return false;
+    if (filters.day === 'weekend' && !isWeekend(slot.weekday)) return false;
+  }
+  return true;
+}
+
+function konselorMatchesSearch(k) {
+  if (!filters.search) return true;
+  const q = filters.search.toLowerCase();
+  return k.nama.toLowerCase().includes(q) || k.spesialis.some(s => s.toLowerCase().includes(q)) || (k.bio || '').toLowerCase().includes(q);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// LOAD & FILTERS
+// ═══════════════════════════════════════════════════════════════════════════
+async function loadKonselor() {
+  const grid = document.getElementById('konselor-grid');
+  grid.innerHTML = Array(6).fill('<div class="skeleton-card"></div>').join('');
+  try {
+    const data = await gasCall('getAllKonselorPublic');
+    konselorData = Array.isArray(data) ? data : [];
+    const statEl = document.getElementById('stat-konselor');
+    if(statEl) statEl.textContent = konselorData.filter(k => k.status === 'aktif').length + '+';
+    populateTopikChips();
+    renderCurrentMode();
+  } catch (err) {
+    grid.innerHTML = '<div class="empty-state"><div>⚠️</div><p>Gagal memuat data. <button class="card-btn" style="max-width:140px;margin-top:12px;" onclick="loadKonselor()">Coba lagi</button></p></div>';
+  }
+}
+
+function populateTopikChips() {
+  const allTopik = new Set();
+  konselorData.forEach(k => k.spesialis.forEach(s => allTopik.add(s)));
+  const wrap = document.getElementById('chip-topik');
+  let html = '<button class="chip active" data-topik="" onclick="toggleChip(this,\'topik\')">Semua</button>';
+  Array.from(allTopik).sort().forEach(t => {
+    html += `<button class="chip" data-topik="${escAttr(t)}" onclick="toggleChip(this,'topik')">${escHtml(t)}</button>`;
+  });
+  wrap.innerHTML = html;
+}
+
+function toggleChip(el, group) {
+  const groupAttr = group === 'topik' ? 'data-topik' : (group === 'time' ? 'data-time' : 'data-day');
+  document.querySelectorAll(`.chip[${groupAttr}]`).forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  filters[group] = el.getAttribute(groupAttr) || '';
+  applyFilters();
+}
+
+function applyFilters() { filters.search = document.getElementById('search-input').value.trim(); renderCurrentMode(); }
+function resetFilters() {
+  filters.search = ''; filters.topik = ''; filters.time = ''; filters.day = '';
+  document.getElementById('search-input').value = '';
+  document.querySelectorAll('.chip').forEach(c => {
+    const isAll = !c.getAttribute('data-topik') && !c.getAttribute('data-time') && !c.getAttribute('data-day');
+    c.classList.toggle('active', isAll || c.textContent.trim() === 'Semua');
+  });
+  renderCurrentMode();
+}
+
+function setMode(mode) {
+  viewMode = mode;
+  document.getElementById('mode-konselor-btn').classList.toggle('active', mode === 'konselor');
+  document.getElementById('mode-jadwal-btn').classList.toggle('active', mode === 'jadwal');
+  document.getElementById('konselor-grid').style.display = (mode === 'konselor') ? '' : 'none';
+  document.getElementById('jadwal-timeline').style.display = (mode === 'jadwal') ? '' : 'none';
+  renderCurrentMode();
+}
+
+function renderCurrentMode() { if (viewMode === 'konselor') renderKonselorGrid(); else renderJadwalTimeline(); }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// RENDERS
+// ═══════════════════════════════════════════════════════════════════════════
+function renderKonselorGrid() {
+  const grid = document.getElementById('konselor-grid');
+  const filtered = konselorData.filter(k => {
+    if (!konselorMatchesSearch(k)) return false;
+    if (!passesFilters(k, null)) return false;
+    return !filters.time && !filters.day ? true : k.slots.some(s => !s.taken && passesFilters(k, s));
+  });
+
+  if (!filtered.length) { grid.innerHTML = '<div class="empty-state"><div>🔍</div><p>Tidak ada konselor dengan filter ini.</p><button class="card-btn" style="max-width:140px;margin:14px auto 0;" onclick="resetFilters()">Reset Filter</button></div>'; return; }
+
+  grid.innerHTML = filtered.map(k => {
+    const next = k.slots.find(s => !s.taken && passesFilters(k, s));
+    const totalAvail = k.slots.filter(s => !s.taken && passesFilters(k, s)).length;
+    return `
+      <div class="konselor-card ${k.status === 'sibuk' ? 'busy' : ''}">
+        <div class="card-photo" onclick="openModal('${escAttr(k.id)}')">
+          ${k.foto ? `<img src="${escAttr(k.foto)}" onerror="this.remove()">` : ''}
+          <div class="card-photo-initials">${escHtml(getInitials(k.nama))}</div>
+          <div class="card-status ${k.status === 'aktif' ? 'status-aktif' : 'status-sibuk'}">${k.status === 'aktif' ? '● Aktif' : '● Sibuk'}</div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">${escHtml(k.nama)}</div>
+          <div class="card-title">${escHtml(k.title)}</div>
+          <div class="card-tags">${k.spesialis.slice(0,3).map(s => `<span class="tag">${escHtml(s)}</span>`).join('')}</div>
+          ${next
+            ? `<div class="next-slot-badge">⚡ Tercepat: ${escHtml(next.label)} <span style="opacity:.65;font-weight:500;">(${totalAvail} slot)</span></div>`
+            : `<div class="next-slot-badge empty">⊘ Tidak ada slot tersedia</div>`
+          }
+          <div class="card-actions">
+            <button class="card-btn secondary" onclick="openModal('${escAttr(k.id)}')">Lihat Profil</button>
+            <button class="card-btn" onclick='quickBookKonselor(${JSON.stringify(String(k.id))})' ${!next ? 'disabled' : ''}>Booking ⚡</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderJadwalTimeline() {
+  const wrap = document.getElementById('jadwal-timeline');
+  const allSlots = [];
+  konselorData.forEach(k => {
+    if (k.status !== 'aktif') return;
+    if (!konselorMatchesSearch(k)) return;
+    if (filters.topik && !k.spesialis.some(s => s.toLowerCase().includes(filters.topik.toLowerCase()))) return;
+    k.slots.forEach(s => {
+      if (!s.taken && passesFilters(k, s)) allSlots.push({ ...s, konselor: k });
+    });
+  });
+
+  if (!allSlots.length) { wrap.innerHTML = '<div class="empty-state"><div>📅</div><p>Belum ada slot tersedia.</p><button class="card-btn" style="max-width:140px;margin:14px auto 0;" onclick="resetFilters()">Reset Filter</button></div>'; return; }
+
+  const byDay = {};
+  allSlots.forEach(s => { const dateKey = s.iso.slice(0, 10); (byDay[dateKey] = byDay[dateKey] || []).push(s); });
+  const sortedDays = Object.keys(byDay).sort();
+
+  wrap.innerHTML = sortedDays.map(dateKey => {
+    const slots = byDay[dateKey].sort((a, b) => a.iso.localeCompare(b.iso));
+    const d = new Date(dateKey + 'T00:00:00');
+    const dateLabel = DAYS_SHORT[d.getDay()] + ', ' + d.getDate() + ' ' + MONTHS_ID[d.getMonth()] + ' ' + d.getFullYear();
+    return `
+      <div class="day-group">
+        <div class="day-header"><h3>${escHtml(dateLabel)}</h3><span>${slots.length} slot</span></div>
+        <div class="day-slots">
+          ${slots.map(s => `
+            <div class="timeline-slot" onclick='openModalWithSlot(${JSON.stringify(String(s.konselor.id))}, ${JSON.stringify(s.iso)})'>
+              <div class="ts-time">⏰ ${escHtml(s.label.split('•')[1] || '').trim()}</div>
+              <div class="ts-konselor">${escHtml(s.konselor.nama)}</div>
+              <div class="ts-spec">${escHtml(s.konselor.spesialis.slice(0,2).join(' · '))}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// MODAL & BOOKING
+// ═══════════════════════════════════════════════════════════════════════════
+function openModal(id) {
+  const k = konselorData.find(x => String(x.id) === String(id));
+  if (!k) return;
+  selectedKonselor = k; selectedSlot = null; modalWeekFilter = 0;
+
+  const avatar = document.getElementById('modal-avatar');
+  avatar.innerHTML = k.foto
+    ? `<img src="${escAttr(k.foto)}" onerror="this.parentElement.innerHTML='<span>${escHtml(getInitials(k.nama))}</span>'">`
+    : `<span>${escHtml(getInitials(k.nama))}</span>`;
+
+  document.getElementById('modal-name').textContent = k.nama;
+  document.getElementById('modal-title').textContent = k.title;
+  document.getElementById('modal-tags').innerHTML = k.spesialis.map(s => `<span class="tag">${escHtml(s)}</span>`).join('');
+  document.getElementById('modal-bio').textContent = k.bio || 'Belum ada bio.';
+
+  renderModalSlots();
+
+  document.getElementById('booking-form-section').classList.remove('visible');
+  document.getElementById('slot-hint').style.display = 'block';
+  document.getElementById('slot-summary').classList.remove('visible');
+  document.getElementById('success-screen').classList.remove('visible');
+  document.getElementById('modal-body').style.display = '';
+
+  ['f-nama','f-usia','f-wa','f-email','f-keluhan','f-gender','f-durasi','f-topik','f-cerita'].forEach(id => { const el = document.getElementById(id); if (el) { el.value = el.tagName==='SELECT'?'':el.value; el.value=''; el.classList.remove('invalid'); } }); const cc=document.getElementById('cerita-count'); if(cc) cc.textContent='0 karakter';
+  document.querySelectorAll('.field-error').forEach(e => e.classList.remove('visible'));
+  document.getElementById('submit-btn').disabled = false;
+  document.getElementById('submit-btn').innerHTML = 'Konfirmasi Pendaftaran';
+
+  document.getElementById('booking-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function openModalWithSlot(id, iso) {
+  openModal(id);
+  setTimeout(() => {
+    const target = selectedKonselor.slots.find(s => s.iso === iso);
+    if (target) {
+      const now = new Date(); now.setHours(0,0,0,0);
+      const diffDays = Math.floor((new Date(iso) - now) / 86400000);
+      modalWeekFilter = Math.min(3, Math.floor(diffDays / 7));
+      renderModalSlots();
+      setTimeout(() => {
+        document.querySelectorAll('.slot[data-iso]').forEach(s => {
+          if (s.getAttribute('data-iso') === iso) selectSlot(s, target);
+        });
+      }, 80);
+    }
+  }, 50);
+}
+
+function renderModalSlots() {
+  const k = selectedKonselor;
+  const now = new Date(); now.setHours(0,0,0,0);
+  const buckets = [[], [], [], []];
+  k.slots.forEach(s => {
+    const diff = Math.floor((new Date(s.iso) - now) / 86400000);
+    const idx = Math.min(3, Math.floor(diff / 7));
+    if (idx >= 0) buckets[idx].push(s);
+  });
+
+  const tabsHtml = buckets.map((b, i) => {
+    const labels = ['Minggu Ini', 'Minggu Depan', '2 Minggu Lagi', '3 Minggu Lagi'];
+    return `<button class="week-tab ${i === modalWeekFilter ? 'active' : ''}" onclick="setModalWeek(${i})">${labels[i]} (${b.filter(s => !s.taken).length})</button>`;
+  }).join('');
+  document.getElementById('week-tabs').innerHTML = tabsHtml;
+
+  const visible = buckets[modalWeekFilter];
+  const grid = document.getElementById('slots-grid');
+  if (!visible.length) { grid.innerHTML = '<p style="font-size:13px;color:var(--text-light);grid-column:1/-1;text-align:center;padding:20px;">Tidak ada slot di periode ini.</p>'; return; }
+  
+  grid.innerHTML = visible.map(s => {
+    const parts = s.label.split('•');
+    return `
+      <div class="slot ${s.taken ? 'taken' : ''}" data-iso="${escAttr(s.iso)}" onclick='${s.taken ? "" : `selectSlot(this, ${JSON.stringify(s)})`}'>
+        <div class="slot-day">${escHtml(parts[0].trim())}</div>
+        <div class="slot-time">${escHtml((parts[1] || '').trim())}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function setModalWeek(i) { modalWeekFilter = i; renderModalSlots(); }
+
+function selectSlot(el, slot) {
+  document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedSlot = slot;
+  const summary = document.getElementById('slot-summary');
+  summary.textContent = `📅  Jadwal dipilih: ${slot.label} bersama ${selectedKonselor.nama}`;
+  summary.classList.add('visible');
+  document.getElementById('booking-form-section').classList.add('visible');
+  document.getElementById('slot-hint').style.display = 'none';
+  setTimeout(() => document.getElementById('booking-form-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+function closeModal() { document.getElementById('booking-overlay').classList.remove('open'); document.body.style.overflow = ''; selectedKonselor = null; selectedSlot = null; }
+
+function validateField(id, isValid) {
+  const el = document.getElementById(id);
+  const errEl = document.getElementById('err-' + id.replace('f-', ''));
+  el.classList.toggle('invalid', !isValid);
+  if (errEl) errEl.classList.toggle('visible', !isValid);
+  return isValid;
+}
+
+async function submitBooking() {
+  const nama = document.getElementById('f-nama').value.trim();
+  const usia = document.getElementById('f-usia').value.trim();
+  const wa = document.getElementById('f-wa').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const keluhan = document.getElementById('f-keluhan').value.trim();
+  const gender = document.getElementById('f-gender').value;
+  const durasi = document.getElementById('f-durasi').value;
+  const topik = document.getElementById('f-topik').value.trim();
+  const cerita = document.getElementById('f-cerita').value.trim();
+
+  let ok = true;
+  ok &= validateField('f-nama', !!nama);
+  ok &= validateField('f-usia', usia && Number(usia) >= 10 && Number(usia) <= 80);
+  ok &= validateField('f-wa', /^[0-9+\-\s]{9,16}$/.test(wa) && wa.replace(/\D/g,'').length >= 9);
+  ok &= validateField('f-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+  ok &= validateField('f-keluhan', !!keluhan);
+  ok &= validateField('f-gender', !!gender);
+  ok &= validateField('f-durasi', !!durasi);
+  ok &= validateField('f-topik', topik.length >= 5);
+  ok &= validateField('f-cerita', cerita.length >= 20);
+
+  if (!ok) { showToast('⚠️ Periksa kembali isian form.', 'error'); return; }
+  if (!selectedSlot) { showToast('⚠️ Pilih jadwal terlebih dahulu.', 'error'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Mengirim...';
+
+  const payload = {
+    namaKlien: nama, usiaKlien: usia, waKlien: wa, emailKlien: email, keluhanKlien: keluhan,
+    jenisKelamin: gender, durasiMasalah: durasi, topikSpesifik: topik, ceritaMasalah: cerita,
+    namaKonselor: selectedKonselor.nama, emailKonselor: selectedKonselor.email,
+    jadwal: selectedSlot.label, jadwalISO: selectedSlot.iso
+  };
+
+  try {
+    const res = await gasCall('submitBookingApi', payload);
+    if (!res || !res.success) throw new Error((res && res.error) || 'Gagal menyimpan booking.');
+
+    document.getElementById('modal-body').style.display = 'none';
+    document.getElementById('success-screen').classList.add('visible');
+    document.getElementById('success-msg').innerHTML =
+      `Sesi kamu dengan <strong>${escHtml(selectedKonselor.nama)}</strong> pada <strong>${escHtml(selectedSlot.label)}</strong> sudah terdaftar.<br><br>No. Booking: <strong>${escHtml(res.bookingId || '-')}</strong><br>Cek emailmu untuk konfirmasi lengkap.`;
+
+    setTimeout(loadKonselor, 500);
+  } catch (err) {
+    showToast('❌ ' + (err.message || err), 'error');
+    btn.disabled = false; btn.textContent = 'Konfirmasi Pendaftaran';
+  }
+}
+
+function quickBook() {
+  let earliest = null;
+  konselorData.forEach(k => {
+    if (k.status !== 'aktif') return;
+    const next = k.slots.find(s => !s.taken);
+    if (!next) return;
+    if (!earliest || next.iso < earliest.slot.iso) earliest = { konselor: k, slot: next };
+  });
+  if (!earliest) { showToast('Belum ada slot tersedia. Coba lihat semua konselor.', 'error'); showView('konselor'); return; }
+  showView('konselor');
+  setTimeout(() => openModalWithSlot(earliest.konselor.id, earliest.slot.iso), 250);
+}
+
+function quickBookKonselor(id) {
+  const k = konselorData.find(x => String(x.id) === String(id));
+  if (!k) return;
+  const next = k.slots.find(s => !s.taken);
+  if (!next) { showToast('Tidak ada slot tersedia untuk konselor ini.', 'error'); return; }
+  openModalWithSlot(k.id, next.iso);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ADMIN
+// ═══════════════════════════════════════════════════════════════════════════
+async function doLogin() {
+  const pw = document.getElementById('admin-pw').value;
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Memverifikasi...';
+  try {
+    const res = await gasCall('verifyAdminPassword', pw);
+    if (res && res.success) { adminToken = res.token; document.getElementById('login-err').style.display = 'none'; showView('admin'); }
+    else document.getElementById('login-err').style.display = 'block';
+  } catch (e) { document.getElementById('login-err').style.display = 'block'; }
+  btn.disabled = false; btn.innerHTML = 'Masuk ke Admin Panel';
+}
+function doLogout() { adminToken = null; showView('landing'); }
+function setAdminTab(tab) {
+  document.getElementById('tab-konselor-btn').classList.toggle('active', tab === 'konselor');
+  document.getElementById('tab-bookings-btn').classList.toggle('active', tab === 'bookings');
+  document.getElementById('admin-tab-konselor').style.display = (tab === 'konselor') ? '' : 'none';
+  document.getElementById('admin-tab-bookings').style.display = (tab === 'bookings') ? '' : 'none';
+  if (tab === 'konselor') renderAdminKonselor();
+  if (tab === 'bookings') loadAdminBookings();
+}
+
+function renderAdminKonselor() {
+  const tbody = document.getElementById('admin-konselor-tbody');
+  if (!konselorData.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-light);">Belum ada konselor.</td></tr>'; return; }
+  tbody.innerHTML = konselorData.map(k => `
+    <tr>
+      <td><strong>${escHtml(k.nama)}</strong></td>
+      <td>${escHtml(k.spesialis.join(', '))}</td>
+      <td>${escHtml(k.email)}</td>
+      <td><button class="admin-pill ${k.status === 'aktif' ? 'pill-aktif' : 'pill-sibuk'}" onclick="toggleStatus('${escAttr(k.id)}')">${k.status === 'aktif' ? '● Aktif' : '● Sibuk'}</button></td>
+      <td>
+        <button class="btn-action btn-edit" onclick="editKonselor('${escAttr(k.id)}')">✏️</button>
+        <button class="btn-action btn-del" onclick="deleteKonselor('${escAttr(k.id)}')">🗑</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function editKonselor(id) {
+  const k = konselorData.find(x => String(x.id) === String(id));
+  if (!k) return;
+  editingKonselorId = k.id;
+  document.getElementById('new-nama').value = k.nama; document.getElementById('new-email').value = k.email;
+  document.getElementById('new-title').value = k.title; document.getElementById('new-foto').value = k.foto;
+  document.getElementById('new-spesialis').value = k.spesialis.join(', '); document.getElementById('new-bio').value = k.bio;
+  document.getElementById('new-slots').value = k.slotsRaw || '';
+
+  const formBox = document.getElementById('admin-konselor-form');
+  formBox.classList.add('editing');
+  document.getElementById('form-title').innerHTML = '✏️ Edit Konselor';
+  document.getElementById('save-konselor-btn').innerHTML = 'Simpan Perubahan';
+  document.getElementById('cancel-edit-btn').style.display = 'block';
+  formBox.scrollIntoView({ behavior: 'smooth', block: 'end' });
+}
+
+function cancelEdit() {
+  editingKonselorId = null;
+  ['new-nama','new-email','new-title','new-foto','new-spesialis','new-bio','new-slots'].forEach(id => document.getElementById(id).value = '');
+  const formBox = document.getElementById('admin-konselor-form');
+  formBox.classList.remove('editing');
+  document.getElementById('form-title').innerHTML = '➕ Tambah Konselor Baru';
+  document.getElementById('save-konselor-btn').innerHTML = 'Tambah Konselor';
+  document.getElementById('cancel-edit-btn').style.display = 'none';
+}
+
+async function saveKonselor() {
+  const nama = document.getElementById('new-nama').value.trim();
+  const email = document.getElementById('new-email').value.trim();
+  const spesialis = document.getElementById('new-spesialis').value.trim();
+  const slotsRaw = document.getElementById('new-slots').value.trim();
+
+  if (!nama || !email || !spesialis) { showToast('⚠️ Nama, Email, dan Spesialisasi wajib diisi', 'error'); return; }
+
+  const btn = document.getElementById('save-konselor-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Menyimpan...';
+
+  const payload = {
+    nama, email, title: document.getElementById('new-title').value.trim() || 'Konselor',
+    foto: document.getElementById('new-foto').value.trim(), spesialis: spesialis.split(',').map(s => s.trim()).filter(Boolean),
+    bio: document.getElementById('new-bio').value.trim() || '-', slots: slotsRaw ? slotsRaw.split(';').map(s => s.trim()).filter(Boolean) : [],
+    status: 'aktif'
+  };
+
+  let res;
+  if (editingKonselorId) { payload.id = editingKonselorId; res = await gasCall('updateKonselorApi', adminToken, payload); }
+  else { payload.id = 'KS-' + Date.now(); res = await gasCall('addKonselorApi', adminToken, payload); }
+
+  if (res && res.success) {
+    showToast('✅ ' + (editingKonselorId ? 'Perubahan disimpan!' : 'Konselor ditambahkan!'), 'success');
+    cancelEdit(); await loadKonselor(); renderAdminKonselor();
+  } else showToast('❌ ' + (res && res.error || 'Gagal menyimpan'), 'error');
+  btn.disabled = false; btn.innerHTML = editingKonselorId ? 'Simpan Perubahan' : 'Tambah Konselor';
+}
+
+async function toggleStatus(id) {
+  const k = konselorData.find(x => String(x.id) === String(id)); if (!k) return;
+  const newStatus = k.status === 'aktif' ? 'sibuk' : 'aktif';
+  const res = await gasCall('updateKonselorStatusApi', adminToken, k.id, newStatus);
+  if (res && res.success) { k.status = newStatus; renderAdminKonselor(); showToast(`✅ Status ${k.nama} → ${newStatus}`, 'success'); }
+}
+
+async function deleteKonselor(id) {
+  if (!confirm('Hapus konselor ini?')) return;
+  const res = await gasCall('deleteKonselorApi', adminToken, id);
+  if (res && res.success) { konselorData = konselorData.filter(x => String(x.id) !== String(id)); renderAdminKonselor(); showToast('🗑 Konselor dihapus', 'success'); }
+}
+
+async function loadAdminBookings() {
+  const tbody = document.getElementById('admin-bookings-tbody'); tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Memuat...</td></tr>';
+  const res = await gasCall('listBookingsApi', adminToken, 50);
+  if (res && res.success) {
+    if (!res.data.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Belum ada booking.</td></tr>'; return; }
+    tbody.innerHTML = res.data.map(b => {
+      const sKey = (b.status || 'Menunggu').split(' ')[0];
+      return `<tr><td style="font-size:12px;">${escHtml(b.id)}</td><td><strong>${escHtml(b.namaKlien)}</strong><br><span style="font-size:12px;">${escHtml(b.email||'')}</span></td><td>${escHtml(b.namaKonselor)}</td><td>${escHtml(b.jadwal)}</td>
+      <td><select class="pill-status pill-${sKey}" onchange="changeBookingStatus('${escAttr(b.id)}', this.value)" style="border:none;">
+      ${['Menunggu Konfirmasi','Terkonfirmasi','Selesai','Batal'].map(s => `<option ${s === b.status ? 'selected' : ''}>${s}</option>`).join('')}</select></td></tr>`;
+    }).join('');
+  }
+}
+async function changeBookingStatus(id, newStatus) { await gasCall('updateBookingStatusApi', adminToken, id, newStatus); showToast('✅ Status di-update', 'success'); }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════════════════════════════
+let toastTimer;
+function showToast(msg, type) {
+  const t = document.getElementById('toast'); t.textContent = msg; t.className = 'toast show ' + (type || '');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+function escHtml(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function escAttr(s) { return escHtml(s).replace(/`/g, '&#96;'); }
+
+document.addEventListener('DOMContentLoaded', () => {
+  showView('landing'); loadKonselor();
+  document.addEventListener('input', function(e) {
+    if (e.target && e.target.id === 'f-cerita') {
+      const count = document.getElementById('cerita-count');
+      if (count) count.textContent = e.target.value.length + ' karakter';
+    }
+  });
+});
+</script>
+</body>
+</html>
