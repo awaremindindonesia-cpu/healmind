@@ -293,7 +293,6 @@
     <nav>
       <button class="nav-btn nav-ghost" onclick="showView('landing')">Beranda</button>
       <button class="nav-btn nav-ghost" onclick="showView('konselor')">Konselor</button>
-      <button class="nav-btn nav-solid" onclick="showView('admin-login')">Admin</button>
     </nav>
   </div>
 </header>
@@ -383,80 +382,6 @@
   </div>
 </div>
 
-<!-- ADMIN LOGIN -->
-<div class="view" id="view-admin-login">
-  <div class="login-wrap">
-    <div class="login-box">
-      <div style="font-size:48px;margin-bottom:16px;">🔐</div>
-      <h2>Admin Panel</h2>
-      <p>Masuk sebagai administrator HealMind</p>
-      <div class="form-group" style="text-align:left;">
-        <label>Password Admin</label>
-        <input type="password" id="admin-pw" placeholder="Masukkan password..." onkeydown="if(event.key==='Enter')doLogin()">
-      </div>
-      <div class="login-err" id="login-err">❌ Password salah. Coba lagi.</div>
-      <button class="submit-btn" id="login-btn" onclick="doLogin()">Masuk ke Admin Panel</button>
-    </div>
-  </div>
-</div>
-
-<!-- ADMIN -->
-<div class="view" id="view-admin">
-  <div class="admin-header">
-    <h2>⚙️ Admin Panel</h2>
-    <button class="nav-btn nav-ghost" onclick="doLogout()">Keluar</button>
-  </div>
-
-  <div class="admin-tabs">
-    <button class="admin-tab active" id="tab-konselor-btn" onclick="setAdminTab('konselor')">Konselor</button>
-    <button class="admin-tab" id="tab-bookings-btn" onclick="setAdminTab('bookings')">Booking</button>
-  </div>
-
-  <div id="admin-tab-konselor">
-    <div class="admin-table-wrap">
-      <table>
-        <thead>
-          <tr><th>Nama</th><th>Spesialisasi</th><th>Email</th><th>Status</th><th>Aksi</th></tr>
-        </thead>
-        <tbody id="admin-konselor-tbody"></tbody>
-      </table>
-    </div>
-
-    <div class="add-form" id="admin-konselor-form">
-      <h3 id="form-title">➕ Tambah Konselor Baru</h3>
-      <div class="form-row">
-        <div class="form-group"><label>Nama Lengkap</label><input type="text" id="new-nama" placeholder="Kak Ayu Andini"></div>
-        <div class="form-group"><label>Email</label><input type="email" id="new-email" placeholder="konselor@email.com"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Gelar / Posisi</label><input type="text" id="new-title" placeholder="S.Psi., M.Psi."></div>
-        <div class="form-group"><label>URL Foto (opsional)</label><input type="text" id="new-foto" placeholder="https://..."></div>
-      </div>
-      <div class="form-group"><label>Spesialisasi (pisah dengan koma)</label><input type="text" id="new-spesialis" placeholder="Kecemasan, Depresi, Karir"></div>
-      <div class="form-group"><label>Bio Singkat</label><textarea id="new-bio" rows="3" placeholder="Deskripsi singkat..."></textarea></div>
-      <div class="form-group">
-        <label>Slot Jadwal Mingguan</label>
-        <input type="text" id="new-slots" placeholder="Senin 19:00;Rabu 20:00;Jumat 18:00">
-        <p style="font-size:12px;color:var(--text-light);margin-top:6px;">Format: <code>Hari HH:MM</code> dipisah titik koma.</p>
-      </div>
-      <div style="display:flex; gap:12px; align-items:center;">
-        <button class="submit-btn" id="save-konselor-btn" style="max-width:220px;" onclick="saveKonselor()">Tambah Konselor</button>
-        <button class="submit-btn" id="cancel-edit-btn" style="max-width:140px; background:var(--error); display:none;" onclick="cancelEdit()">Batal Edit</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="admin-tab-bookings" style="display:none;">
-    <div class="admin-table-wrap">
-      <table>
-        <thead>
-          <tr><th>ID</th><th>Klien</th><th>Konselor</th><th>Jadwal</th><th>Status</th></tr>
-        </thead>
-        <tbody id="admin-bookings-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
 
 <!-- BOOKING MODAL -->
 <div class="overlay" id="booking-overlay">
@@ -1100,5 +1025,68 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
+<!-- ──────────── DONASI SECTION ──────────── -->
+<section id="donasi" style="background:linear-gradient(135deg,#f0f9ff 0%,#f7f4ef 50%,#f0fdf4 100%);padding:64px 24px;">
+  <div style="max-width:680px;margin:0 auto;text-align:center;">
+
+    <!-- Icon -->
+    <div style="width:64px;height:64px;background:linear-gradient(135deg,var(--teal-deep),var(--sage));border-radius:20px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 8px 24px rgba(26,95,106,0.2);">
+      🌿
+    </div>
+
+    <!-- Label kecil -->
+    <div style="display:inline-block;background:rgba(42,138,151,0.1);border:1px solid rgba(42,138,151,0.2);color:var(--teal-mid);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:18px;">
+      Tumbuh Bersama
+    </div>
+
+    <!-- Judul -->
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,36px);color:var(--teal-deep);margin:0 0 16px;line-height:1.3;">
+      Setiap Kebaikan Kecil<br>Menciptakan Ruang yang Lebih Besar
+    </h2>
+
+    <!-- Deskripsi -->
+    <p style="font-size:16px;color:var(--text-mid);line-height:1.8;margin:0 auto 12px;max-width:560px;">
+      HealMind hadir sebagai ruang aman — sepenuhnya gratis — untuk siapapun yang membutuhkan
+      teman berbicara. Kami percaya bahwa kesehatan mental bukan kemewahan.
+    </p>
+    <p style="font-size:15px;color:var(--text-light);line-height:1.8;margin:0 auto 32px;max-width:520px;font-style:italic;">
+      Jika kamu merasa terbantu, atau sekadar ingin ikut menjaga nyala ruang ini —
+      dukungan kecilmu berarti sangat besar bagi teman-teman yang akan datang setelah kamu. 💚
+    </p>
+
+    <!-- Tombol donasi -->
+    <a href="LINK_DONASI_DISINI"
+       target="_blank" rel="noopener"
+       id="donasi-btn"
+       style="display:inline-flex;align-items:center;gap:10px;
+              background:linear-gradient(135deg,var(--teal-deep),var(--teal-mid));
+              color:white;text-decoration:none;
+              padding:15px 36px;border-radius:50px;
+              font-size:16px;font-weight:600;font-family:'DM Sans',sans-serif;
+              box-shadow:0 8px 28px rgba(26,95,106,0.28);
+              transition:all 0.3s cubic-bezier(0.4,0,0.2,1);"
+       onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 36px rgba(26,95,106,0.35)'"
+       onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 28px rgba(26,95,106,0.28)'">
+      <span>🌱</span>
+      <span>Dukung AwareMind ✦</span>
+    </a>
+
+    <!-- Catatan kecil -->
+    <p style="font-size:12px;color:var(--text-light);margin-top:16px;opacity:0.75;">
+      Tidak ada kewajiban. Tidak ada ekspektasi. Hanya rasa terima kasih yang tulus. 🙏
+    </p>
+
+    <!-- Divider dekoratif -->
+    <div style="display:flex;align-items:center;gap:14px;margin-top:40px;max-width:400px;margin-left:auto;margin-right:auto;">
+      <div style="flex:1;height:1px;background:linear-gradient(to right,transparent,var(--cream-dark));"></div>
+      <span style="font-size:13px;color:var(--text-light);white-space:nowrap;">Bersama kita bisa hadir untuk lebih banyak jiwa</span>
+      <div style="flex:1;height:1px;background:linear-gradient(to left,transparent,var(--cream-dark));"></div>
+    </div>
+
+  </div>
+</section>
+<!-- ──────────── END DONASI ──────────── -->
+
 </body>
 </html>
